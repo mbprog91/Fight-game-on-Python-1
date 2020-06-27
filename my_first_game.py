@@ -70,12 +70,12 @@ def is_intersection(tup1, tup2):
 
 
 def is_Point_in_cut(x, y, x1, y1, x2, y2):
-    print("min func", min(x1, x2), ' ', max(x1, x2))
-    print("max func", max(x1, x2), ' ', max(x1, x2))
+    #print("min func", min(x1, x2), ' ', max(x1, x2))
+    #print("max func", max(x1, x2), ' ', max(x1, x2))
     eps = 15
     if x >= min(x1, x2) - eps and x <= max(x1, x2) + eps:
         if y >= min(y1, y2) - eps and y <= max(y1, y2) + eps:
-            print("TRUEEEEEEEEEEEE")
+            #print("TRUEEEEEEEEEEEE")
             return (x, y)
 
     return tup_none
@@ -169,7 +169,7 @@ class Vragi(pygame.sprite.Sprite):
                 if is_rectangle_intersect(startx, starty, startx + 50, starty + 50, i[0], i[1], i[0] + 50, i[1] + 50):
                     good_pair = False
             for i in coord_walls:
-                print(i)
+                #print(i)
                 if i[2] == 1:
                     wid = 90
                     hei = 5
@@ -205,10 +205,10 @@ class Vragi(pygame.sprite.Sprite):
                                           self.rect.y + self.speedy)
                     line2 = get_equal_line(self.rect.x + 50, self.rect.y + 50,
                                            self.rect.x + 50 + self.speedx, self.rect.y + 50 + self.speedy)
-                    print("line_vrag == ", line)
+                    #print("line_vrag == ", line)
                     Flag = True
                     for j in help_coord_equals:
-                        print("line_wall = ", j)
+                        #print("line_wall = ", j)
                         tuple_intersect = is_intersection(line, j)
                         tuple_intersect2 = is_intersection(line2, j)
                         if tuple_intersect[0] != None or tuple_intersect2[0] != None:
@@ -221,20 +221,20 @@ class Vragi(pygame.sprite.Sprite):
                             else:
                                 help_x2 = help_x1 + 5
                                 help_y2 = help_y1 + 90
-                            print("coord_walls == ", help_x1, help_y1, help_x2, help_y2)
-                            print("Точка пересечения == ", tuple_intersect)
+                            #print("coord_walls == ", help_x1, help_y1, help_x2, help_y2)
+                            #print("Точка пересечения == ", tuple_intersect)
                             help_function_is_cut_intersect = is_Point_in_cut(tuple_intersect[0], tuple_intersect[1], help_x1, help_y1,
                                                                              help_x2, help_y2)
-                            print(help_function_is_cut_intersect)
+                            #print(help_function_is_cut_intersect)
                             help_function_is_cut_intersect2 = is_Point_in_cut(tuple_intersect2[0], tuple_intersect2[1],help_x1, help_y1,
                                                                              help_x2, help_y2)
                             if help_function_is_cut_intersect != tup_none or help_function_is_cut_intersect2 != tup_none:
                                 Flag = False
                     if not Flag:
                         (self.speedx, self.speedy) = get_now_speed(self.rect.x, self.rect.y)
-                        print("UPDATE ============== ", self.speedx, self.speedy)
+                        #print("UPDATE ============== ", self.speedx, self.speedy)
                     else:
-                        print(Flag)
+                        #print(Flag)
                         break
                 self.rect.x += self.speedx
                 self.rect.y += self.speedy
@@ -272,7 +272,7 @@ class Pulya(pygame.sprite.Sprite):
                 self.down_direction()
             elif keystate[pygame.K_w]:
                 self.up_direction()
-            print(self.speedx, self.speedy)
+            #print(self.speedx, self.speedy)
             time_last_shoot = time.time()
         else:
             shiftx = coordxplayer - startx
@@ -509,14 +509,14 @@ def main():
 
 
         if pygame.sprite.spritecollide(player, vrags, False) or pygame.sprite.spritecollide(player, Pulya_group_vrag, False):
-            print("YOU LOST")
+            #print("YOU LOST")
             winsound.Beep(2500, 500)
             running = False
         dead_vrags = pygame.sprite.groupcollide(Pulya_group, vrags, True, True)
         pulya_walls = pygame.sprite.groupcollide(walls_group, Pulya_group, False, True)
         pulya_walls_vrag = pygame.sprite.groupcollide(walls_group, Pulya_group_vrag, False, True)
         if pygame.sprite.spritecollide(player, walls_group, False):
-            print("YOU LOST")
+            #print("YOU LOST")
             winsound.Beep(2500, 500)
             running = False
         pygame.sprite.groupcollide(walls_group, vrags, False, True)
@@ -534,11 +534,11 @@ def main():
 
 while True:
     start_settings()
-    print("START MAIN == ", start_main)
+    #print("START MAIN == ", start_main)
     if not start_main:
         start_screen()
     main()
-    print("WIN == ", win)
+    #print("WIN == ", win)
     if win:
         start_settings()
         win_screen()
