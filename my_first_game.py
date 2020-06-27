@@ -1,5 +1,3 @@
- #https://proglib.io/p/neural-nets-guide/
-#https://pythonru.com/primery/streljalka-s-pygame-2-sprajty-vragov
 from os import path
 
 
