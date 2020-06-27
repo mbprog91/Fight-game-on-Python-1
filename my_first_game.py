@@ -1,3 +1,5 @@
+ #https://proglib.io/p/neural-nets-guide/
+#https://pythonru.com/primery/streljalka-s-pygame-2-sprajty-vragov
 from os import path
 
 
@@ -20,7 +22,7 @@ import winsound
 pygame.init()
 pygame.mixer.init()
 
-
+img_dir = path.join(path.dirname(__file__), 'img')
 font_name = pygame.font.match_font('arial')
 
 start_main = False
@@ -115,8 +117,7 @@ def get_now_speed(x, y):
 class Our_Tank(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((50, 50))
-        self.image.fill(GREEN)
+        self.image = my_pic
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH, random.randint(0, HEIGHT))
     def update(self):
@@ -164,7 +165,7 @@ class Vragi(pygame.sprite.Sprite):
             good_pair = True
             startx = random.randint(0, WIDTH - 100)
             starty = random.randint(0, HEIGHT)
-            print(startx, starty)
+            #print(startx, starty)
             for i in start_coord_vrags:
                 if is_rectangle_intersect(startx, starty, startx + 50, starty + 50, i[0], i[1], i[0] + 50, i[1] + 50):
                     good_pair = False
@@ -176,7 +177,7 @@ class Vragi(pygame.sprite.Sprite):
                 else:
                     wid = 5
                     hei = 90
-                print(startx, starty, startx + 50, starty + 50, i[0], i[1], i[0] + wid, i[1] + hei)
+                #print(startx, starty, startx + 50, starty + 50, i[0], i[1], i[0] + wid, i[1] + hei)
                 if is_rectangle_intersect(startx, starty, startx + 50, starty + 50, i[0], i[1], i[0] + wid, i[1] + hei):
                     good_pair = False
             if good_pair:
@@ -367,16 +368,23 @@ class Walls(pygame.sprite.Sprite):
 def start_settings():
     global screen, clock, all_sprites, vrags, Pulya_group_vrag, Pulya_group, walls_group, player, time_delta, now_coord_of_player, patron
     global last_time, time_list, time_list_shoot_vragi, tup_none, time_last_shoot, count_vrags, count_walls, help_coord_walls
-    global help_coord_equals, coord_walls, time_wait_to_load_game, start_coord_vrags, vrag_img
+    global help_coord_equals, coord_walls, time_wait_to_load_game, start_coord_vrags, vrag_img, background, background_rect
+    global my_pic
+
     start_coord_vrags = []
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
-    pygame.display.set_caption("WOT new version")
+    background = pygame.image.load(path.join(img_dir, 'background.jpg')).convert()
+    background_rect = background.get_rect()
+    screen.fill(BLACK)
+    screen.blit(background, background_rect)
+    pygame.display.set_caption("Idk")
     clock = pygame.time.Clock()
     all_sprites = pygame.sprite.Group()
     vrags = pygame.sprite.Group()
     Pulya_group = pygame.sprite.Group()
     Pulya_group_vrag = pygame.sprite.Group()
     walls_group = pygame.sprite.Group()
+    my_pic = pygame.image.load(path.join(img_dir, "my_pic.png")).convert()
     player = Our_Tank()
     all_sprites.add(player)
     time_delta = 1.5
@@ -389,9 +397,9 @@ def start_settings():
     tup_none = (None, None)
     time_last_shoot = time.time()
 
-    count_vrags = random.randint(2, 4)
+    count_vrags = random.randint(3, 5)
     # count_vrags = 1
-    count_walls = random.randint(1, 4)
+    count_walls = random.randint(2, 4)
     # count_walls = 1
 
     help_coord_walls = [(5, 90), (90, 5)]
@@ -404,7 +412,6 @@ def start_settings():
         wall = Walls()
         walls_group.add(wall)
         all_sprites.add(wall)
-    img_dir = path.join(path.dirname(__file__), 'img')
     vrag_img = pygame.image.load(path.join(img_dir, "vrag_image.png")).convert()
     for i in range (count_vrags):
         vrag = Vragi(i + 1)
@@ -417,6 +424,8 @@ def start_settings():
 
 
 def start_screen():
+    screen.fill(BLACK)
+    screen.blit(background, background_rect)
     write(screen, "Добро пожаловать в игру: название не придумал!", 30, WIDTH / 2, HEIGHT / 4)
     write(screen, "Правила:", 22,
               WIDTH / 2, HEIGHT / 2 + 50)
@@ -445,7 +454,7 @@ def start_screen():
 def win_screen():
     global start_main
     start_main = False
-    write(screen, "Поздравляю, Вы победили!", 30, WIDTH // 2, HEIGHT // 2)
+    write(screen, "Вы победили!", 30, WIDTH // 2, HEIGHT // 2)
     write(screen, "Нажмите пробел, чтобы начать игру заново", 18, WIDTH / 2, HEIGHT / 2 + 250)
     write(screen, "Нажмите escape, чтобы вернуться к правилам", 18, WIDTH / 2, HEIGHT / 2 + 300)
     pygame.display.flip()
@@ -486,7 +495,9 @@ def main():
     global time_delta, win, start_main
     running = True
     start_main = False
+
     while running:
+
         win = False
         # Держим цикл на правильной скорости
         clock.tick(FPS)
@@ -517,6 +528,7 @@ def main():
             running = False
         all_sprites.update()
         screen.fill(BLACK)
+        screen.blit(background, background_rect)
         all_sprites.draw(screen)
         write(screen, str(patron), 30, WIDTH - 30, 0)
         pygame.display.flip()
