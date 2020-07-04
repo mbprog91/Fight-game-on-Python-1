@@ -7,3 +7,5 @@
 ![alt text](screen2.png "Игра")
 Экран победы:
 ![alt text](screen3.png "Победа")
+Экран поражения: 
+![alt text](screen4.png "Победа")
