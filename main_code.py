@@ -3,7 +3,7 @@ from os import path
 
 
 WIDTH = 1200
-HEIGHT = 750
+HEIGHT = 650
 FPS = 60
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
